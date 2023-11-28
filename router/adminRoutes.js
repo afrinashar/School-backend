@@ -1,15 +1,15 @@
 // routes/adminRoutes.js
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+//const passport = require('passport');
 const Admin = require('../models/admin');
 
 // Admin login route
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/admin/dashboard',
-  failureRedirect: '/admin/login',
-  failureFlash: true,
-}));
+//router.post('/login', passport.authenticate('local', {
+//   successRedirect: '/admin/dashboard',
+//   failureRedirect: '/admin/login',
+//   failureFlash: true,
+// }));
 
 // Admin dashboard route (protected)
 router.get('/dashboard', (req, res) => {

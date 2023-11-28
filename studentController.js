@@ -13,14 +13,29 @@ const createStudent = async (req, res) => {
 };
 
 const getAllStudents = async (req, res) => {
-  try {
-    const students = await Student.find({});
-    res.send(students);
-  } catch (error) {
+  const getAllStudents = async (req, res) => {
+    try {
+      const { page = 1, limit = 50, sort, search } = req.query;
+  
+      const query = {};
+      if (search) {
+        query.$or = [
+          { name: { $regex: search, $options: 'i' } },
+          { description: { $regex: search, $options: 'i' } },
+        ];
+      }
+  
+      const student = await Student.find(query)
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip((page - 1) * limit);
+      res.send(students);
+    }  
+    catch (error) {
     res.status(500).send(error);
   }
 };
-
+}
 // Get a single student by student_id
 const getStudentById = async (req, res) => {
   try {

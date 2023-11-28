@@ -6,12 +6,12 @@ const adminRoutes = require('./router/adminRoutes')
 const studentRouter = require('./router/studentRouter');
 const teacherRouter = require('./router/teacherRouter');
 var cors = require('cors');
-var dotenv = require('dotenv').config()
+require('dotenv').config()
 const app = express();
 app.use(express.json());
 app.use(cors());
 // Connect to MongoDB
-mongoose.connect( dotenv.process.env, {
+mongoose.connect( process.env.SECRET_KEY, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
