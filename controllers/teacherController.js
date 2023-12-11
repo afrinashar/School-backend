@@ -1,4 +1,4 @@
-const Teacher = require('../models/teacherModel');
+const Teacher = require('../models/teacher/teacherDetails');
 
 // Controller actions
 const createTeacher = async (req, res) => {

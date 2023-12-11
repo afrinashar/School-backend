@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 //const passport = require('passport');
-const Admin = require('../models/admin');
+const Admin = require('../models/management/admin');
 
 // Admin login route
 //router.post('/login', passport.authenticate('local', {
