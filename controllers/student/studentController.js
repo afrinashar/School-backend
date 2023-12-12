@@ -1,8 +1,8 @@
 const Student = require("../../models/student/studentDetails");
-
+const asyncErrorHandler = require('./../Utils/asyncErrorHandler');
 // Controller actions
-const createStudent = async (req, res) => {
-  try {
+const createStudent =asyncErrorHandler( async (req, res) => {
+   
     let student = await Student.findOne({
       rollNo: req.body.rollNoNo,
     });
@@ -15,13 +15,12 @@ const createStudent = async (req, res) => {
     student = new Student(req.body);
     await student.save();
     res.status(201).send(student);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-};
+  }  
+   
+)
 
-const getAllStudents = async (req, res) => {
-  try {
+const getAllStudents = asyncErrorHandler(async (req, res) => {
+ 
     const students = await Student.find({});
     if (!students) {
       return res
@@ -34,14 +33,12 @@ const getAllStudents = async (req, res) => {
       user,
     };
     res.send(students);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
+  
+})
 
 // Get a single student by student_id
-const getStudentById = async (req, res) => {
-  try {
+const getStudentById =asyncErrorHandler( async (req, res) => {
+  
     const student = await Student.findById(req.params.id);
     if (!student) {
       return res
@@ -49,13 +46,10 @@ const getStudentById = async (req, res) => {
         .json({ success: false, error: "Student not found" });
     }
     res.status(200).json({ success: true, data: student });
-  } catch (error) {
-    res.status(500).json({ success: false, error: "Server Error" });
-  }
-};
+  } )
 // Update a student by student_id
-const updateStudent = async (req, res) => {
-  try {
+const updateStudent = asyncErrorHandler(async (req, res) => {
+ 
     const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
@@ -66,14 +60,11 @@ const updateStudent = async (req, res) => {
         .json({ success: false, error: "Student not found" });
     }
     res.status(200).json({ success: true, data: student });
-  } catch (error) {
-    res.status(500).json({ success: false, error: "Server Error" });
-  }
-};
+  })
 
 // Delete a student by student_id
-const deleteStudent = async (req, res) => {
-  try {
+const deleteStudent = asyncErrorHandler( async (req, res) => {
+  
     const student = await Student.findByIdAndDelete(req.params.id);
     // res.json(deletedStudent);
     if (!student) {
@@ -82,10 +73,7 @@ const deleteStudent = async (req, res) => {
         .json({ success: false, error: "Student not found" });
     }
     res.status(200).json({ success: true, data: {} });
-  } catch (error) {
-    res.status(500).json({ success: false, error: "Server Error" });
-  }
-};
+  } )
 module.exports = {
   createStudent,
   getAllStudents,
