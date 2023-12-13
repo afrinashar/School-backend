@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Notice = require("../models/Other/Notice");
+const Notice = require("../../models/Others/Notice");
 
 const getNotice= async (req, res) => {
   try {
@@ -14,8 +14,19 @@ const getNotice= async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
-
-const addNotice= async (req, res) => {
+const getNoticeById= async (req, res) => {
+  try {
+    let notice = await Notice.findById(req.body);
+    if (notice) {
+      res.json({ success: true, message: "Notice Get Successfully", notice });
+    } else {
+      res.status(404).json({ success: false, message: "No Notice Available!" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+const createNotice= async (req, res) => {
   let { link, description, title, type } = req.body;
   try {
     let notice = await Notice.findOne({ link, description, title, type });
@@ -80,4 +91,8 @@ const deleteNotice = async (req, res) => {
   }
 }
 
-module.exports = router;
+module.exports =  {createNotice,
+  getNotice,
+  getNoticeById,
+  updateNotice,
+  deleteNotice,}

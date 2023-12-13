@@ -4,7 +4,7 @@ const Teacher = require('../../models/teacher/teacherDetails');
 const createTeacher = async (req, res) => {
   try {
     let teacher = await Teacher.findOne({
-      rollNo: req.body.rollNoNo,
+      rollNo: req.body.rollNo,
     });
     if (user) {
       return res.status(400).json({

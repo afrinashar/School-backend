@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Material = require("../models/Other/Material");
+const Material = require("../../models/Others/Material");
 const getMaterial= async (req, res) => {
   try {
     let material = await Material.find(req.body);
@@ -16,7 +16,7 @@ const getMaterial= async (req, res) => {
   }
 }
 
-const addMaterial= async (req, res) => {
+const createMaterial= async (req, res) => {
   let { faculty, link, subject, title } = req.body;
   try {
     await Material.create({
@@ -92,4 +92,8 @@ const deleteMaterial= async (req, res) => {
   }
 }
 
-module.exports = router;
+module.exports =  { createMaterial,
+  getMaterial,
+  getMaterialById,
+  updateMaterial,
+  deleteMaterial,}

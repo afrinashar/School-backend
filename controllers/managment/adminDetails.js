@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const adminDetails = require("../../models/Admin/AdminDetails");
 
-router.post("/getDetails", async (req, res) => {
+const getAdmin= async (req, res) => {
   try {
     let user = await adminDetails.find(req.body);
     if (!user) {
@@ -19,9 +19,9 @@ router.post("/getDetails", async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-});
+} 
 
-router.post("/addDetails", async (req, res) => {
+const addAdmin= async (req, res) => {
   try {
     let user = await adminDetails.findOne(req.body);
     if (user) {
@@ -40,9 +40,9 @@ router.post("/addDetails", async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-});
+} 
 
-router.post("/updateDetails/:id", async (req, res) => {
+const updateAdmin = async (req, res) => {
   try {
     let user = await adminDetails.findByIdAndUpdate(req.params.id, req.body);
     if (!user) {
@@ -59,9 +59,8 @@ router.post("/updateDetails/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-});
-
-router.delete("/deleteDetails/:id", async (req, res) => {
+} 
+ const delateAdmin= async (req, res) => {
   try {
     let user = await adminDetails.findByIdAndDelete(req.params.id);
     if (!user) {
@@ -78,6 +77,6 @@ router.delete("/deleteDetails/:id", async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-});
+} 
 
 module.exports = router;

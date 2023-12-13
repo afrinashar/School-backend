@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Subject = require("../models/Other/Subject");
+const Subject = require("../../models/Others/Subject");
 
 const getSubject= async (req, res) => {
   try {
@@ -21,8 +21,27 @@ const getSubject= async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 } 
+const getSubjectById= async (req, res) => {
+  try {
+    let subject = await Subject.findOne();
+    if (!subject) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No Subject Available" });
+    }
+    const data = {
+      success: true,
+      message: "one Subject Loaded!",
+      subject,
+    };
+    res.json(data);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+} 
 
-const addSubject = async (req, res) => {
+const createSubject = async (req, res) => {
   let { name, code } = req.body;
   try {
     let subject = await Subject.findOne({ code });
@@ -38,6 +57,25 @@ const addSubject = async (req, res) => {
     const data = {
       success: true,
       message: "Subject Added!",
+    };
+    res.json(data);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+} 
+const updateSubject = async (req, res) => {
+  try {
+    let subject = await Subject.findByIdAndUpdate();
+    if (!subject) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No Subject Available" });
+    }
+    const data = {
+      success: true,
+      message: "update Subject Loaded!",
+      subject,
     };
     res.json(data);
   } catch (error) {
@@ -65,4 +103,8 @@ const deleteSubject = async (req, res) => {
   }
 }
 
-module.exports = router;
+module.exports = { createSubject,
+  getSubject,
+  getSubjectById,
+  updateSubject,
+  deleteSubject}
