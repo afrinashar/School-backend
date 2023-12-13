@@ -4,8 +4,8 @@ const express = require("express");
 const router = express.Router();
 const Class = require("../models/Other/class");
 
-const getClass=   asyncErrorHandler(async (req, res) => {
- 
+const getClass= async (req, res) => {
+  try {
     let classes = await Class.find();
 
     const data = {
@@ -14,11 +14,15 @@ const getClass=   asyncErrorHandler(async (req, res) => {
       classes,
     };
     res.json(data);
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
-const addClass=  asyncErrorHandler(async (req, res) => {
+const addClass= async (req, res) => {
   let { name } = req.body;
-  
+  try {
     let branch = await Class.findOne({ name });
     if (branch) {
       const data = {
@@ -34,10 +38,14 @@ const addClass=  asyncErrorHandler(async (req, res) => {
       };
       res.json(data);
     }
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
-const deleteClass =  asyncErrorHandler( async (req, res) => {
-  
+const deleteClass = async (req, res) => {
+  try {
     let mark = await Class.findByIdAndDelete(req.params.id);
     if (!mark) {
       return res
@@ -49,5 +57,9 @@ const deleteClass =  asyncErrorHandler( async (req, res) => {
       message: "class Deleted!",
     };
     res.json(data);
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 module.exports = router;

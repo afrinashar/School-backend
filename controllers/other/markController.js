@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Marks = require("../models/Other/Marks");
 
-const getAllMarks=  asyncErrorHandler(async (req, res) => {
- 
+const getAllMarks= async (req, res) => {
+  try {
     let Mark = await Marks.find(req.body);
     if (!Mark) {
       return res
@@ -16,11 +16,15 @@ const getAllMarks=  asyncErrorHandler(async (req, res) => {
       Mark,
     };
     res.json(data);
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
-const addMarks=   asyncErrorHandler(async (req, res) => {
+const addMarks= async (req, res) => {
   let { enrollmentNo } = req.body;
- 
+  try {
     let Mark = await Marks.findOne({ rollNo });
     if (Mark) {
       await Marks.findByIdAndUpdate(Mark._id, req.body);
@@ -36,11 +40,15 @@ const addMarks=   asyncErrorHandler(async (req, res) => {
         message: "Marks Added!",
       };
       res.json(data);
-    }}
-)
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
-const deleteMarks=  asyncErrorHandler( async (req, res) => {
-  
+const deleteMarks= async (req, res) => {
+  try {
     let mark = await Marks.findByIdAndDelete(req.params.id);
     if (!mark) {
       return res
@@ -52,6 +60,10 @@ const deleteMarks=  asyncErrorHandler( async (req, res) => {
       message: "Marks Deleted!",
     };
     res.json(data);
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
 module.exports = router;

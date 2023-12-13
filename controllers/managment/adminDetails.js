@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const adminDetails = require("../../models/Admin/AdminDetails");
 
-const getAdmin = asyncErrorHandler( async (req, res) => {
-  
+router.post("/getDetails", async (req, res) => {
+  try {
     let user = await adminDetails.find(req.body);
     if (!user) {
       return res
@@ -16,10 +16,13 @@ const getAdmin = asyncErrorHandler( async (req, res) => {
       user,
     };
     res.json(data);
-  } )
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
-const createAdmin = asyncErrorHandler( async (req, res) => {
-  
+router.post("/addDetails", async (req, res) => {
+  try {
     let user = await adminDetails.findOne(req.body);
     if (user) {
       return res.status(400).json({
@@ -34,10 +37,13 @@ const createAdmin = asyncErrorHandler( async (req, res) => {
       user,
     };
     res.json(data);
-  } )
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
-const updateAdmin = asyncErrorHandler( async (req, res) => {
- 
+router.post("/updateDetails/:id", async (req, res) => {
+  try {
     let user = await adminDetails.findByIdAndUpdate(req.params.id, req.body);
     if (!user) {
       return res.status(400).json({
@@ -50,10 +56,13 @@ const updateAdmin = asyncErrorHandler( async (req, res) => {
       message: "Updated Successfull!",
     };
     res.json(data);
-  } )
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
-const deleteAdmin = asyncErrorHandler( async (req, res) => {
-  
+router.delete("/deleteDetails/:id", async (req, res) => {
+  try {
     let user = await adminDetails.findByIdAndDelete(req.params.id);
     if (!user) {
       return res.status(400).json({
@@ -66,6 +75,9 @@ const deleteAdmin = asyncErrorHandler( async (req, res) => {
       message: "Deleted Successfull!",
     };
     res.json(data);
-  } )
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
 
 module.exports = router;
