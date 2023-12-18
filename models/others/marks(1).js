@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const marksSchema = new mongoose.Schema({
     rollNo: {
       type: Number,
-      required: true,
+      required: false,
     },
     internal: {
       type: Map,

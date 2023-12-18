@@ -1,66 +1,54 @@
 const express = require("express");
 const router = express.Router();
-const Admin = require("../../models/Admin/Admin");
+const adminDetails = require("../../models/Admin/AdminDetails");
 
-const adminLogin= async (req, res) => {
-  let { loginid, password } = req.body;
+const getAdmin= async (req, res) => {
   try {
-    let user = await Admin.findOne({ loginid });
+    let user = await adminDetails.find(req.body);
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "Wrong Credentials" });
-    }
-    if (password !== user.password) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Wrong Credentials" });
+        .json({ success: false, message: "No Admin Found" });
     }
     const data = {
       success: true,
-      message: "Login Successfull!",
-      loginid: user.loginid,
-      id: user.id,
+      message: "Admin Details Found!",
+      user,
     };
     res.json(data);
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-}
+} 
 
-const adminRegister = async (req, res) => {
-  let { loginid, password } = req.body;
+const addAdmin= async (req, res) => {
   try {
-    let user = await Admin.findOne({ loginid });
+    let user = await adminDetails.findOne(req.body);
     if (user) {
       return res.status(400).json({
         success: false,
-        message: "Admin With This LoginId Already Exists",
+        message: "Admin With This EmployeeId Already Exists",
       });
     }
-    user = await Admin.create({
-      loginid,
-      password,
-    });
+    user = await adminDetails.create(req.body);
     const data = {
       success: true,
-      message: "Register Successfull!",
-      loginid: user.loginid,
-      id: user.id,
+      message: "Admin Details Added!",
+      user,
     };
     res.json(data);
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-}
+} 
 
-const adminUpdate = async (req, res) => {
+const updateAdmin = async (req, res) => {
   try {
-    let user = await Admin.findByIdAndUpdate(req.params.id, req.body);
+    let user = await adminDetails.findByIdAndUpdate(req.params.id, req.body);
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "No Admin Exists!",
+        message: "No Admin Found",
       });
     }
     const data = {
@@ -71,15 +59,14 @@ const adminUpdate = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-}
-
-const adminDelete = async (req, res) => {
+} 
+ const delateAdmin= async (req, res) => {
   try {
-    let user = await Admin.findByIdAndDelete(req.params.id);
+    let user = await adminDetails.findByIdAndDelete(req.params.id);
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "No Admin Exists!",
+        message: "No Admin Found",
       });
     }
     const data = {
@@ -90,6 +77,6 @@ const adminDelete = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-}
+} 
 
 module.exports = router;

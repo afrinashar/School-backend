@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Admin = require("../../models/Admin/Admin");
+const Admin = require("../../models/Admin");
 
 const adminLogin= async (req, res) => {
   let { loginid, password } = req.body;
@@ -92,4 +92,10 @@ const adminDelete = async (req, res) => {
   }
 }
 
-module.exports = router;
+module.exports = {
+  adminLogin,
+  adminRegister,
+  adminDelete,
+  adminUpdate,
+};
+

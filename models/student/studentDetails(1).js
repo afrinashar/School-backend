@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const studentSchema = new mongoose.Schema({
-  rollNo: { type: Number, required: true },
+  rollNo: { type: Number,  },
   name: { type: String, required: true },
   age: { type: Number, required: true },
   gender:{type: String, required:true},
