@@ -4,9 +4,9 @@ const Marks = require('../../models/others/marks');
 
 const getMarks= async (req, res) => {
   try {
-    let Mark = await Marks.find(req.body);
-    console.log(Mark,"mark");
-    if (!Mark) {
+    let mark = await Marks.find(req.body);
+    console.log(mark,"mark");
+    if (!mark) {
       return res
         .status(400)
         .json({ success: false, message: "Marks Not Available" });
@@ -14,7 +14,7 @@ const getMarks= async (req, res) => {
     const data = {
       success: true,
       message: "All Marks Loaded!",
-      Mark,
+      mark,
     };
     res.json(data);
   } catch (error) {

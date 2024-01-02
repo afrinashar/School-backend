@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Subject = require("../../models/Others/Subject");
+const Subject = require("../../models/others/subject");
 
 const getSubject= async (req, res) => {
   try {
-    let subject = await Subject.find();
+    var subject = await Subject.find();
+    console.log(subject,"sub")
     if (!subject) {
-      return res
+      return res 
         .status(400)
         .json({ success: false, message: "No Subject Available" });
     }
@@ -17,7 +18,7 @@ const getSubject= async (req, res) => {
     };
     res.json(data);
   } catch (error) {
-    console.error(error.message);
+    //console.error(error.message);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 } 
@@ -42,7 +43,7 @@ const getSubjectById= async (req, res) => {
 } 
 
 const createSubject = async (req, res) => {
-  let { name, code } = req.body;
+    let { name, code } = req.body;
   try {
     let subject = await Subject.findOne({ code });
     if (subject) {
