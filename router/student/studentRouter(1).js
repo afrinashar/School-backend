@@ -6,10 +6,10 @@ const {
   updateStudent,
   deleteStudent,
 } = require("../../controllers/student/studentController");
-
+ const studentAuth= require("../")
 const router = express.Router();
 
-router.route("/").post(createStudent).get(getAllStudents);
+router.route("/").post(createStudent).get(studentAuth.protect,  getAllStudents);
 router
   .route("/:id")
   .get(getStudentById)

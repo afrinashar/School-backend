@@ -5,7 +5,7 @@ const {
   getTimeTableById,
   updateTimeTable,
   deleteTimeTable,
-} = require("../../controllers/other/t imeTableController");
+} = require("../../controllers/other/timeTableController");
 
 const router = express.Router();
 

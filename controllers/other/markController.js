@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const Marks = require('../../models/others/marks');
+const Marks = require("../models/Other/Marks");
 
-const getMarks= async (req, res) => {
-  try {
-    let mark = await Marks.find(req.body);
-    console.log(mark,"mark");
-    if (!mark) {
+const getAllMarks=  asyncErrorHandler(async (req, res) => {
+ 
+    let Mark = await Marks.find(req.body);
+    if (!Mark) {
       return res
         .status(400)
         .json({ success: false, message: "Marks Not Available" });
@@ -17,33 +16,11 @@ const getMarks= async (req, res) => {
       mark,
     };
     res.json(data);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-const getMarksById= async (req, res) => {
-  try {
-    let Mark = await Marks.findById(req.params.id);
-    if (!Mark) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Marks Not Available" });
-    } 
-    const data = {
-      success: true,
-      message: "All Marks Loaded!",
-      Mark,
-    };
-    res.json(data);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-const createMarks= async (req, res) => {
-  let { rollNo} = req.body;
-  try {
+  } )
+
+const addMarks=   asyncErrorHandler(async (req, res) => {
+  let { enrollmentNo } = req.body;
+ 
     let Mark = await Marks.findOne({ rollNo });
     if (Mark) {
       await Marks.findByIdAndUpdate(Mark._id, req.body);
@@ -59,33 +36,11 @@ const createMarks= async (req, res) => {
         message: "Marks Added!",
       };
       res.json(data);
-    }
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-const updateMarks= async (req, res) => {
-  try {
-    let Mark = await Marks.getIdAndUpdate(req.body);
-    if (!Mark) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Marks Not Available" });
-    } 
-    const data = {
-      success: true,
-      message: "All Marks Loaded!",
-      Mark,
-    };
-    res.json(data);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
-const deleteMarks= async (req, res) => {
-  try {
+    }}
+)
+
+const deleteMarks=  asyncErrorHandler( async (req, res) => {
+  
     let mark = await Marks.findByIdAndDelete(req.params.id);
     if (!mark) {
       return res
@@ -97,14 +52,6 @@ const deleteMarks= async (req, res) => {
       message: "Marks Deleted!",
     };
     res.json(data);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-}
+  } )
 
-module.exports = {createMarks,
-  getMarks,
-  getMarksById,
-  updateMarks,
-  deleteMarks}
+module.exports =  {addMarks,deleteMarks,getAllMarks}

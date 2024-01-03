@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const adminDetails = require("../../models/Admin/AdminDetails");
 
-const getAdmin= async (req, res) => {
-  try {
+const getAdmin = asyncErrorHandler( async (req, res) => {
+  
     let user = await adminDetails.find(req.body);
     if (!user) {
       return res
@@ -16,13 +16,10 @@ const getAdmin= async (req, res) => {
       user,
     };
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-} 
+  } )
 
-const addAdmin= async (req, res) => {
-  try {
+const createAdmin = asyncErrorHandler( async (req, res) => {
+  
     let user = await adminDetails.findOne(req.body);
     if (user) {
       return res.status(400).json({
@@ -37,13 +34,10 @@ const addAdmin= async (req, res) => {
       user,
     };
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-} 
+  } )
 
-const updateAdmin = async (req, res) => {
-  try {
+const updateAdmin = asyncErrorHandler( async (req, res) => {
+ 
     let user = await adminDetails.findByIdAndUpdate(req.params.id, req.body);
     if (!user) {
       return res.status(400).json({
@@ -56,12 +50,10 @@ const updateAdmin = async (req, res) => {
       message: "Updated Successfull!",
     };
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-} 
- const delateAdmin= async (req, res) => {
-  try {
+  } )
+
+const deleteAdmin = asyncErrorHandler( async (req, res) => {
+  
     let user = await adminDetails.findByIdAndDelete(req.params.id);
     if (!user) {
       return res.status(400).json({
@@ -74,9 +66,6 @@ const updateAdmin = async (req, res) => {
       message: "Deleted Successfull!",
     };
     res.json(data);
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-} 
+  } )
 
 module.exports = router;

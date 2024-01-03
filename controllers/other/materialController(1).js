@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const Material = require("../models/Other/Material");
-const getMaterial=  asyncErrorHandler( async (req, res) => {
- 
+const Material = require("../../models/Others/Material");
+const getMaterial= async (req, res) => {
+  try {
     let material = await Material.find(req.body);
     if (!material) {
       return res
@@ -10,11 +10,15 @@ const getMaterial=  asyncErrorHandler( async (req, res) => {
         .json({ success: false, message: "No Material Available!" });
     }
     res.json({ success: true, message: "Material Found!", material });
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
-const addMaterial=  asyncErrorHandler( async (req, res) => {
+const createMaterial= async (req, res) => {
   let { faculty, link, subject, title } = req.body;
- 
+  try {
     await Material.create({
       faculty,
       link,
@@ -26,9 +30,13 @@ const addMaterial=  asyncErrorHandler( async (req, res) => {
       message: "Material Added!",
     };
     res.json(data);
-  })
-const getMaterialById=  asyncErrorHandler( async (req, res) => {
-  
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+const getMaterialById= async (req, res) => {
+  try {
     let material = await Material.find(req.body,req.params.id);
     if (!material) {
       return res
@@ -36,10 +44,14 @@ const getMaterialById=  asyncErrorHandler( async (req, res) => {
         .json({ success: false, message: "No Material Available!" });
     }
     res.json({ success: true, message: "Material Found!", material });
-  } )
-const updateMaterial=  asyncErrorHandler( async (req, res) => {
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+const updateMaterial= async (req, res) => {
   let { faculty, link, subject, title } = req.body;
- 
+  try {
     let material = await Material.findByIdAndUpdate(req.params.id, {
       faculty,
       link,
@@ -55,10 +67,14 @@ const updateMaterial=  asyncErrorHandler( async (req, res) => {
       success: true,
       message: "Material Updated!",
     });
-  } )
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
 
-const deleteMaterial=  asyncErrorHandler( async (req, res) => {
- 
+const deleteMaterial= async (req, res) => {
+  try {
     let material = await Material.findByIdAndDelete(req.params.id);
     if (!material) {
       return res
@@ -70,6 +86,14 @@ const deleteMaterial=  asyncErrorHandler( async (req, res) => {
       message: "Material Deleted!",
       material,
     });
-  })
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
-module.exports = router;
+module.exports =  { createMaterial,
+  getMaterial,
+  getMaterialById,
+  updateMaterial,
+  deleteMaterial,}
