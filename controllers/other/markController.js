@@ -1,6 +1,6 @@
 const express = require("express");
-const router = express.Router();
-const Marks = require("../models/Other/Marks");
+const asyncErrorHandler=require('./../../Utils/asyncErrorHandler')
+const Marks = require("../../models/others/marks");
 
 const getAllMarks=  asyncErrorHandler(async (req, res) => {
  
@@ -13,20 +13,21 @@ const getAllMarks=  asyncErrorHandler(async (req, res) => {
     const data = {
       success: true,
       message: "All Marks Loaded!",
-      mark,
+      Mark,
     };
     res.json(data);
   } )
 
 const addMarks=   asyncErrorHandler(async (req, res) => {
-  let { enrollmentNo } = req.body;
- 
+ let { enrollmentNo } = req.body;
+ //console.log(rollNo);
     let Mark = await Marks.findOne({ rollNo });
+    
     if (Mark) {
-      await Marks.findByIdAndUpdate(Mark._id, req.body);
+      await Marks.create( req.body);
       const data = {
         success: true,
-        message: "Marks Added!",
+        message: "Marks Already exixt!",
       };
       res.json(data);
     } else {

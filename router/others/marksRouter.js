@@ -5,7 +5,7 @@ const {
   getMarksById,
   updateMarks,
   deleteMarks,
-} = require("../../controllers/other/marksController");
+} = require("../../controllers/other/markController");
 
 const router = express.Router();
 

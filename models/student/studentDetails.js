@@ -10,7 +10,7 @@ const studentSchema = new mongoose.Schema({
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
-    zip_code: { type: String, required: true }
+    zip_code: { type: Number, required: true }
   }
  
 });

@@ -1,31 +1,39 @@
 const express = require("express");
+const asyncErrorHandler = require("../../Utils/asyncErrorHandler")
 const router = express.Router();
-const Material = require("../models/Other/Material");
-const getMaterial=  asyncErrorHandler( async (req, res) => {
- 
+const Material = require("../../models/others/material");
+const getMaterial=   ( async (req, res) => {
+ try{
+
+
     let material = await Material.find(req.body);
     if (!material) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No Material Available!" });
+      
+        
+        res.send(material).status(400);
     }
-    res.json({ success: true, message: "Material Found!", material });
-  } )
+    res.send(material).status(400);
+  }
+  catch (error) { 
+    res.status(400).send(error);
+  }
+} )
 
-const addMaterial=  asyncErrorHandler( async (req, res) => {
-  let { faculty, link, subject, title } = req.body;
+const addMaterial=   ( async (req, res) => {
+ try{ let { faculty, link, subject, title } = req.body;
  
-    await Material.create({
+   const Materials=  new Material({
       faculty,
       link,
       subject,
       title,
     });
-    const data = {
-      success: true,
-      message: "Material Added!",
-    };
-    res.json(data);
+    await Materials.save();
+    res.status(201).send(Materials);
+  
+   } catch (error) { 
+    res.status(400).send(error);
+  }
   })
 const getMaterialById=  asyncErrorHandler( async (req, res) => {
   
@@ -72,4 +80,6 @@ const deleteMaterial=  asyncErrorHandler( async (req, res) => {
     });
   })
 
-module.exports = router;
+module.exports ={
+  getMaterial,getMaterialById,addMaterial,updateMaterial,deleteMaterial
+};
