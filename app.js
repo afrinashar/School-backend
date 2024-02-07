@@ -9,9 +9,9 @@ const path = require("path");
 //const passport = require('./config/passport');
 const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes')
-const studentRouter = require('./router/studentRouter');
-const teacherRouter = require('./router/teacherRouter');
-//const MarksRouter = require('./router/others/marksRouter');
+const studentRouter = require('./router/student/studentRouter');
+const teacherRouter = require('./router/teacher/teacherRouter');
+ const MarksRouter = require('./router/others/marksRouter');
 //const MaterialsRouter = require('./router/others/materialRouter');
 
 
@@ -38,7 +38,7 @@ app.use(userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/students', studentRouter);
 app.use('/teachers', teacherRouter);
-//app.use('/marks', MarksRouter);
+ app.use('/marks', MarksRouter);
 //app.use('/material', MaterialsRouter);
 
 const PORT = process.env.PORT || 3000;

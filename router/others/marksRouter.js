@@ -1,7 +1,7 @@
 const express = require("express");
 const {
-  createMarks,
-  getMarks,
+ addMarks,
+  getAllMarks,
   getMarksById,
   updateMarks,
   deleteMarks,
@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.route("/").post(createMarks).get(getMarks);
+router.route("/").post(addMarks).get(getAllMarks);
 router
   .route("/:id")
   .get(getMarksById)

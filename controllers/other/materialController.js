@@ -1,5 +1,5 @@
 const express = require("express");
-const asyncErrorHandler = require("../../Utils/asyncErrorHandler")
+const asyncHandler = require("express-async-handler");
 const router = express.Router();
 const Material = require("../../models/others/material");
 const getMaterial=   ( async (req, res) => {
@@ -35,7 +35,7 @@ const addMaterial=   ( async (req, res) => {
     res.status(400).send(error);
   }
   })
-const getMaterialById=  asyncErrorHandler( async (req, res) => {
+const getMaterialById=  asyncHandler( async (req, res) => {
   
     let material = await Material.find(req.body,req.params.id);
     if (!material) {
@@ -45,7 +45,7 @@ const getMaterialById=  asyncErrorHandler( async (req, res) => {
     }
     res.json({ success: true, message: "Material Found!", material });
   } )
-const updateMaterial=  asyncErrorHandler( async (req, res) => {
+const updateMaterial=  asyncHandler( async (req, res) => {
   let { faculty, link, subject, title } = req.body;
  
     let material = await Material.findByIdAndUpdate(req.params.id, {
@@ -65,7 +65,7 @@ const updateMaterial=  asyncErrorHandler( async (req, res) => {
     });
   } )
 
-const deleteMaterial=  asyncErrorHandler( async (req, res) => {
+const deleteMaterial=  asyncHandler( async (req, res) => {
  
     let material = await Material.findByIdAndDelete(req.params.id);
     if (!material) {

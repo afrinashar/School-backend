@@ -1,46 +1,62 @@
 const express = require("express");
-const asyncErrorHandler=require('./../../Utils/asyncErrorHandler')
+const asyncHandler = require("express-async-handler");
 const Marks = require("../../models/others/marks");
-
-const getAllMarks=  asyncErrorHandler(async (req, res) => {
+const RollNo =require("../../models/student/studentDetails")
+const getAllMarks=  asyncHandler(async (req, res) => {
  
-    let Mark = await Marks.find(req.body);
-    if (!Mark) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Marks Not Available" });
-    } 
-    const data = {
-      success: true,
-      message: "All Marks Loaded!",
-      Mark,
-    };
-    res.json(data);
+    let mark = await Marks.find({ rollNo: req.body.rollNo});
+    // if (!Mark) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Marks Not Available" });
+    // } 
+     mark = new Marks(req.body)
+     await mark.save();
+     res.status(201).send(mark);
+     
+  } )
+  const getMarksById=  asyncHandler(async (req, res) => {
+ 
+    let mark = await Marks.findById(req.params.id);
+    // if (!Mark) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "Marks Not Available" });
+    // } 
+     mark = new Marks(req.body)
+     await mark.save();
+     res.status(201).send(mark);
+     
   } )
 
-const addMarks=   asyncErrorHandler(async (req, res) => {
- let { enrollmentNo } = req.body;
- //console.log(rollNo);
-    let Mark = await Marks.findOne({ rollNo });
-    
-    if (Mark) {
-      await Marks.create( req.body);
-      const data = {
-        success: true,
-        message: "Marks Already exixt!",
-      };
-      res.json(data);
-    } else {
-      await Marks.create(req.body);
-      const data = {
-        success: true,
-        message: "Marks Added!",
-      };
-      res.json(data);
-    }}
+const addMarks=   asyncHandler(async (req, res) => {
+  let mark = await Marks.findOne(req.body);
+  // if (!Mark) {
+  //   return res
+  //     .status(400)
+  //     .json({ success: false, message: "Marks Not Available" });
+  // } 
+   mark = new Marks(req.body)
+   await mark.save();
+   res.status(201).send(mark);
+   
+} 
 )
+const updateMarks=  asyncHandler(async (req, res) => {
+ 
+  let mark = await Marks.findByIdAndUpdate(req.params.id);
+  // if (!Mark) {
+  //   return res
+  //     .status(400)
+  //     .json({ success: false, message: "Marks Not Available" });
+  // } 
+   mark = new Marks(req.body)
+   await mark.save();
+   res.status(201).send(mark);
+   
+} )
 
-const deleteMarks=  asyncErrorHandler( async (req, res) => {
+const deleteMarks=  asyncHandler( async (req, res) => {
   
     let mark = await Marks.findByIdAndDelete(req.params.id);
     if (!mark) {
@@ -55,4 +71,4 @@ const deleteMarks=  asyncErrorHandler( async (req, res) => {
     res.json(data);
   } )
 
-module.exports =  {addMarks,deleteMarks,getAllMarks}
+module.exports =  {addMarks,deleteMarks,getAllMarks,getMarksById,updateMarks}

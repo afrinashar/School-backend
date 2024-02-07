@@ -6,12 +6,13 @@ const createStudent =asyncHandler( async (req, res) => {
     let student = await Student.findOne({
       rollNo: req.body.rollNo,
     });
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: "Student With This Enrollment Already Exists",
-      });
-    }
+    // const user = req.body.rollNo
+    // if (user) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Student With This Enrollment Already Exists",
+    //   });
+    // }
     student = new Student(req.body);
     await student.save();
     res.status(201).send(student);

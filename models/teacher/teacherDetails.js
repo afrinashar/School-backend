@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const teacherSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
-   teacher_id: { type: Number, required: true },
+     
+   teacher_id:  mongoose.Schema.Types.ObjectId ,
   name: { type: String, required: true },
   age: { type: Number, required: true },
   
