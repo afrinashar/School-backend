@@ -6,13 +6,15 @@ const getMaterial=   ( async (req, res) => {
  try{
 
 
-    let material = await Material.find(req.body);
-    if (!material) {
+      let material = await Material.find({});
+    // if (!material) {
       
         
-        res.send(material).status(400);
-    }
-    res.send(material).status(400);
+    //     res.send(material).status(400);
+    // }
+material= new Material(req.body)
+     await material.save();
+     res.ststus(201).send(material)
   }
   catch (error) { 
     res.status(400).send(error);
@@ -20,16 +22,16 @@ const getMaterial=   ( async (req, res) => {
 } )
 
 const addMaterial=   ( async (req, res) => {
- try{ let { faculty, link, subject, title } = req.body;
- 
-   const Materials=  new Material({
-      faculty,
-      link,
-      subject,
-      title,
-    });
-    await Materials.save();
-    res.status(201).send(Materials);
+ try{
+  let material = await Material.findOne( );
+  // if (!material) {
+    
+      
+  //     res.send(material).status(400);
+  // }
+material= new Material(req.body)
+   await material.save();
+   res.ststus(201).send(material)
   
    } catch (error) { 
     res.status(400).send(error);

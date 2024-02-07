@@ -6,6 +6,7 @@ const createStudent =asyncHandler( async (req, res) => {
     let student = await Student.findOne({
       rollNo: req.body.rollNo,
     });
+   
     // const user = req.body.rollNo
     // if (user) {
     //   return res.status(400).json({
@@ -19,7 +20,7 @@ const createStudent =asyncHandler( async (req, res) => {
   }  
    
 )
-
+ 
 const getAllStudents = asyncHandler(async (req, res) => {
  
     const students = await Student.find({});

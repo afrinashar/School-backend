@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(morgan("dev"));
 // Use the student router
-app.use(userRoutes);
+app.use(userRoutes); 
 app.use('/admin', adminRoutes);
 app.use('/students', studentRouter);
 app.use('/teachers', teacherRouter);
