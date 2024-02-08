@@ -1,8 +1,9 @@
 const express = require("express");
 //const router = express.Router();
-const Subject = require("../models/Other/Subject");
+const Subject = require("../../models/others/subject");
+const asyncHandler = require("express-async-handler");
 
-const getSubject=  asyncErrorHandler( async (req, res) => {
+const getSubject=  asyncHandler( async (req, res) => {
    
     let subject = await Subject.find();
     if (!subject) {
@@ -18,7 +19,7 @@ const getSubject=  asyncErrorHandler( async (req, res) => {
     res.json(data);
   } )
 
-const addSubject =  asyncErrorHandler( async (req, res) => {
+const addSubject =  asyncHandler( async (req, res) => {
   let { name, code } = req.body;
  
     let subject = await Subject.findOne({ code });
@@ -38,7 +39,7 @@ const addSubject =  asyncErrorHandler( async (req, res) => {
     res.json(data);
   } )
 
-const deleteSubject =  asyncErrorHandler( async (req, res) => {
+const deleteSubject =  asyncHandler( async (req, res) => {
  
     let subject = await Subject.findByIdAndDelete(req.params.id);
     if (!subject) {

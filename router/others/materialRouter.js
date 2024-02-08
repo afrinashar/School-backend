@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  createMaterial,
+  addMaterial,
   getMaterial,
   getMaterialById,
   updateMaterial,
@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.route("/").post(createMaterial).get(getMaterial);
+router.route("/").post(addMaterial).get(getMaterial);
 router
   .route("/:id")
   .get(getMaterialById)

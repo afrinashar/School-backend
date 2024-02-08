@@ -6,12 +6,8 @@ const studentSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   gender:{type: String, required:true},
  
-  address: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zip_code: { type: Number, required: true }
-  }
+  address:  { type: String, required: true },
+    
  
 });
 

@@ -7,12 +7,15 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const path = require("path");
 //const passport = require('./config/passport');
+const classRoutes =require('./router/others/classRouter')
+const authRoutes =require('./router/authRouter')
 const userRoutes = require('./router/userRoutes');
 const adminRoutes = require('./router/adminRoutes')
 const studentRouter = require('./router/student/studentRouter');
 const teacherRouter = require('./router/teacher/teacherRouter');
  const MarksRouter = require('./router/others/marksRouter');
-//const MaterialsRouter = require('./router/others/materialRouter');
+ const MaterialsRouter = require('./router/others/materialRouter');
+ const SubjectRouter = require('./router/others/subjectRouter');
 
 
 const app = express();
@@ -25,7 +28,7 @@ app.use(cors());
 /* Middleware */
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
   })
 );
 app.use(express.json());
@@ -38,8 +41,11 @@ app.use(userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/students', studentRouter);
 app.use('/teachers', teacherRouter);
+app.use('/class', classRoutes);
  app.use('/marks', MarksRouter);
-//app.use('/material', MaterialsRouter);
+ app.use('/auth',authRoutes)
+ app.use('/material', MaterialsRouter);
+ app.use('/subject', SubjectRouter);
 
 const PORT = process.env.PORT || 3000;
 const { MONGO_USERNAME, MONGO_PASSWORD } = process.env;

@@ -27,31 +27,20 @@ const UserSchema = new Schema(
     role: {
       type: Schema.Types.String,
       default: "user",
-      enum: ["user", "admin"],
+      enum: ["user", "managment","student","teacher"],
     },
     profile_image: {
       type: Schema.Types.String,
       default:
         "https://i.pinimg.com/736x/83/bc/8b/83bc8b88cf6bc4b4e04d153a418cde62.jpg",
     },
-    about: {
-      type: Schema.Types.String,
-    },
-    subscribers: {
-      type: [Schema.Types.ObjectId],
-    },
+    
     createdAt: {
       type: Date,
       default: Date.now,
     },
-    blocked: {
-      type: Schema.Types.Boolean,
-      default: false,
-    },
-    emailVerified: {
-      type: Schema.Types.Boolean,
-      default: false,
-    },
+    
+    
   },
   {
     timestamps: true,

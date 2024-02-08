@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
 
 const Class = new mongoose.Schema({
-  name: {
+  class: {
     type: String,
-    required: true,
-  },
-  Branch: {
+   },
+  section: {
     type: String,
-    required: true,
+    
   },
 }, { timestamps: true });
 

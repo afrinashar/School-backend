@@ -2,41 +2,29 @@ const express = require("express");
 const asyncHandler = require("express-async-handler");
 const router = express.Router();
 const Material = require("../../models/others/material");
-const getMaterial=   ( async (req, res) => {
- try{
-
-
-      let material = await Material.find({});
-    // if (!material) {
-      
-        
-    //     res.send(material).status(400);
-    // }
-material= new Material(req.body)
-     await material.save();
-     res.ststus(201).send(material)
+const getMaterial=  asyncHandler(  ( async (req, res) => {
+  const material = await Material.find({});
+  if (!material) {
+    return res
+      .status(400)
+      .json({ success: false, message: "No Material Found" });
   }
-  catch (error) { 
-    res.status(400).send(error);
-  }
+  const data = {
+    success: true,
+    message: "Material  Found!",
+     material
+  };
+  res.send(data);
 } )
-
-const addMaterial=   ( async (req, res) => {
- try{
-  let material = await Material.findOne( );
-  // if (!material) {
-    
-      
-  //     res.send(material).status(400);
-  // }
-material= new Material(req.body)
-   await material.save();
-   res.ststus(201).send(material)
+)
+const addMaterial= asyncHandler(   ( async (req, res) => {
+  let material = await Material.findOne(req.body);
+ 
   
-   } catch (error) { 
-    res.status(400).send(error);
-  }
-  })
+  material = new Material(req.body);
+  await material.save();
+  res.status(201).send(material);
+  }))
 const getMaterialById=  asyncHandler( async (req, res) => {
   
     let material = await Material.find(req.body,req.params.id);

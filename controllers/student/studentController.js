@@ -31,10 +31,10 @@ const getAllStudents = asyncHandler(async (req, res) => {
     }
     const data = {
       success: true,
-      message: "Student Details Found!",
+      message: "Student  Found!",
        students
     };
-    res.send(students);
+    res.send(data);
 })
 
 // Get a single student by student_id
@@ -46,7 +46,7 @@ const getStudentById =asyncHandler( async (req, res) => {
         .status(404)
         .json({ success: false, error: "Student not found" });
     }
-    res.status(200).json({ success: true, data: student });
+    res.status(2000).json({ success: true, data: student, message:success });
   } )
 // Update a student by student_id
 const updateStudent = asyncHandler(async (req, res) => {
@@ -60,7 +60,7 @@ const updateStudent = asyncHandler(async (req, res) => {
         .status(404)
         .json({ success: false, error: "Student not found" });
     }
-    res.status(200).json({ success: true, data: student });
+    res.status(2001).json({ success: true, data: student });
   })
 
 // Delete a student by student_id

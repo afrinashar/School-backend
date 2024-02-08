@@ -3,25 +3,18 @@ const asyncHandler = require("express-async-handler");
 const Marks = require("../../models/others/marks");
 const Student =require("../../models/student/studentDetails")
 const getAllMarks=  asyncHandler(async (req, res) => {
- 
-    let mark = await Marks.find({});
-    const RollNo = req.rollNo
-    const student = await Student.findOne({ RollNo });
-    if (!student) {
-      return res.status(404).json({ error: 'Student not found' });
-    }
-    // if (!Mark) {
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: "Marks Not Available" });
-    // } 
-    const marks = await Marks.find({});
-    if (marks.length === 0) {
-      return res.status(404).json({ error: 'No marks found for the student' });
-    }
-     mark = new Marks(req.body)
-     await mark.save();
-     res.status(201).send(mark);
+   const marks = await Marks.find({});
+     if (!marks) {
+       return res
+         .status(400)
+         .json({ success: false, message: "No marks Found" });
+     }
+     const data = {
+       success: true,
+       message: "Marks  Found!",
+        marks
+     };
+     res.send(data);
   } )
   const getMarksById=  asyncHandler(async (req, res) => {
  

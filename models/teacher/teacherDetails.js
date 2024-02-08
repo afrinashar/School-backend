@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 
 const teacherSchema = new mongoose.Schema({
-     
+     _id:false,
    teacher_id:  mongoose.Schema.Types.ObjectId ,
   name: { type: String, required: true },
   age: { type: Number, required: true },
   
   address: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zip_code: { type: String, required: true }
-  } 
+      type: String, required: true  
+  } ,
+  phone: { type: Number, required: true },
+  email:{ type:String, required: true,
+    unique: [true, "Please provide an different e-mail"],
+    match: [
+      /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+      "Please provide a valid e-mail",
+    ],}
 });
 
 const Teacher = mongoose.model('Teacher', teacherSchema);
