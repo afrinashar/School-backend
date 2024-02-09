@@ -24,11 +24,11 @@ const createStudent =asyncHandler( async (req, res) => {
 const getAllStudents = asyncHandler(async (req, res) => {
  
     const students = await Student.find({});
-    if (!students) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No Student Found" });
-    }
+    // if (!students) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "No Student Found" });
+    // }
     const data = {
       success: true,
       message: "Student  Found!",
