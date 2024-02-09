@@ -8,7 +8,7 @@ const teacherSchema = new mongoose.Schema({
   
   address: {
       type: String, required: true  
-  } ,
+  } , role:{type:String},
   phone: { type: Number, required: true },
   email:{ type:String, required: true,
     unique: [true, "Please provide an different e-mail"],

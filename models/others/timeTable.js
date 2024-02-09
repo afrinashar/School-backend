@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const TimeTable = new mongoose.Schema({
-  link: {
+  class: {
     type: String,
     required: true,
   },
@@ -9,8 +9,20 @@ const TimeTable = new mongoose.Schema({
     type: String,
     required: true,
   },
-  semester: {
-    type: Number,
+  classOne: {
+    type: string,
+    required: true,
+  }, classTwo: {
+    type: string,
+    required: true,
+  }, classThree: {
+    type: string,
+    required: true,
+  }, classFour: {
+    type: string,
+    required: true,
+  }, classFive: {
+    type: string,
     required: true,
   }
 }, { timestamps: true });
