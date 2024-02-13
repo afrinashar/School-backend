@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-
+const Student = require("../student/studentDetails")
 const marksSchema = new mongoose.Schema({
-    rollNo: {
-      type: Number,
-       
-    },
+   
+    student: { type: mongoose.Schema.Types.ObjectId, ref: Student },
     internal: {
       type: Map,
       marks: {

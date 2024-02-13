@@ -5,7 +5,7 @@ const {
 
   deleteSubject,
 } = require("../../controllers/other/subjectController");
-
+     
 const router = express.Router();
 
 router.route("/").post(addSubject).get(getSubject);

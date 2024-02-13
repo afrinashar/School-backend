@@ -34,7 +34,7 @@ const getAllStudents = asyncHandler(async (req, res) => {
       message: "Student  Found!",
        students
     };
-    res.send(data);
+    res.send(students);
 })
 
 // Get a single student by student_id

@@ -16,7 +16,7 @@ const getSubject=  asyncHandler( async (req, res) => {
       message: "All Subject Loaded!",
       subject,
     };
-    res.json(data);
+    res.json(subject);
   } )
 
 const addSubject =  asyncHandler( async (req, res) => {
