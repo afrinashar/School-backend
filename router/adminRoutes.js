@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // routes/adminRoutes.js
 const express = require('express');
 const router = express.Router();
@@ -10,6 +11,7 @@ const Admin = require('../models/management/admin');
 //   failureRedirect: '/admin/login',
 //   failureFlash: true,
 // }));
+
 
 // Admin dashboard route (protected)
 router.get('/dashboard', (req, res) => {
