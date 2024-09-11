@@ -1,6 +1,6 @@
 const express = require("express");
 const {
- addMarks,
+  addMarks,
   getAllMarks,
   getMarksById,
   updateMarks,
@@ -10,10 +10,6 @@ const {
 const router = express.Router();
 
 router.route("/").post(addMarks).get(getAllMarks);
-router
-  .route("/:id")
-  .get(getMarksById)
-  .put(updateMarks)
-  .delete(deleteMarks);
+router.route("/:id").get(getMarksById).put(updateMarks).delete(deleteMarks);
 
 module.exports = router;

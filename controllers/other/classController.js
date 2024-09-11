@@ -1,58 +1,29 @@
-
-
-const express = require("express");
-const router = express.Router();
 const Class = require("../../models/others/class");
 const asyncHandler = require("express-async-handler");
-const getClass=  asyncHandler(  (async (req, res) => {
- 
+
+const getClass = asyncHandler(async (req, res) => {
   const classes = await Class.find({});
-  if (!classes) {
-    return res
-      .status(400)
-      .json({ success: false, message: "No classes Found" });
-  }
-  const data = {
-    success: true,
-    message: "classes  Found!",
-     classes
-  };
-  res.send(data);
-    
-  } ))
+  res.status(200).json({ success: true, data: classes });
+});
 
-const addClass=  asyncHandler((async (req, res) => {
-   
-    // let branch = await Class.findOne({ name });
-    // if (branch) {
-    //   const data = {
-    //     success: false,
-    //     message: "Already Exists!",
-    //   };
-    //   res.status(400).json(data);
-    // } else {
-    
-     
-       let classes= new Class.findOne(req.body)
-      classes = new Class(req.body);
-      await classes.save();
-      res.status(201).send(classes);
-    } 
-  //  }
-   ))
-
-const deleteClass =  asyncHandler( async (req, res) => {
+const addClass = asyncHandler(async (req, res) => {
+  const existingClass = await Class.findOne({ className: req.body.className });
   
-    let mark = await Class.findByIdAndDelete(req.params.id);
-    if (!mark) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No class Data Exists!" });
-    }
-    const data = {
-      success: true,
-      message: "class Deleted!",
-    };
-    res.json(data);
-  } )
-module.exports = {getClass,addClass,deleteClass};
+  if (existingClass) {
+    return res.status(400).json({ success: false, message: "Class already exists" });
+  }
+
+  const newClass = new Class(req.body);
+  await newClass.save();
+  res.status(201).json({ success: true, data: newClass });
+});
+
+const deleteClass = asyncHandler(async (req, res) => {
+  const deletedClass = await Class.findByIdAndDelete(req.params.id);
+  if (!deletedClass) {
+    return res.status(404).json({ success: false, message: "Class not found" });
+  }
+  res.status(200).json({ success: true, message: "Class deleted" });
+});
+
+module.exports = { getClass, addClass, deleteClass };

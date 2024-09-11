@@ -5,15 +5,11 @@ const {
   getTimeTableById,
   updateTimeTable,
   deleteTimeTable,
-} = require("../../controllers/other/t imeTableController");
+} = require("../../controllers/other/timeTableController");
 
 const router = express.Router();
 
 router.route("/").post(createTimeTable).get(getTimeTable);
-router
-  .route("/:id")
-  .get(getTimeTableById)
-  .put(updateTimeTable)
-  .delete(deleteTimeTable);
+router.route("/:id").get(getTimeTableById).put(updateTimeTable).delete(deleteTimeTable);
 
 module.exports = router;

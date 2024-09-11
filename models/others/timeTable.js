@@ -1,30 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const TimeTable = new mongoose.Schema({
-  class: {
-    type: String,
-    required: true,
-  },
-  branch: {
-    type: String,
-    required: true,
-  },
-  classOne: {
-    type: string,
-    required: true,
-  }, classTwo: {
-    type: string,
-    required: true,
-  }, classThree: {
-    type: string,
-    required: true,
-  }, classFour: {
-    type: string,
-    required: true,
-  }, classFive: {
-    type: string,
-    required: true,
-  }
+const timeTableSchema = new mongoose.Schema({
+  class: { type: mongoose.Schema.Types.ObjectId, ref: 'Class', required: true }, // Class reference
+  subjects: [
+    {
+      period: { type: Number, required: true }, // Period number (e.g. 1st period)
+      subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject', required: true }, // Subject reference
+    }
+  ],
 }, { timestamps: true });
 
-module.exports = mongoose.model("Timetable", TimeTable);
+const Timetable = mongoose.model('Timetable', timeTableSchema);
+module.exports = Timetable;

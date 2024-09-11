@@ -1,31 +1,23 @@
 const mongoose = require('mongoose');
-const Student = require("../student/studentDetails")
+const Student = require('../student/student'); // Path based on your file structure
+
 const marksSchema = new mongoose.Schema({
-   
-    student: { type: mongoose.Schema.Types.ObjectId, ref: Student },
-    internal: {
-      type: Map,
-      marks: {
-        tamil: { type: String, required: true },
-        english: { type: String, required: true },
-        mathmaticals: { type: String, required: true },
-        science: { type: String, required: true },
-        socialscience: { type: String, required: true }
-      },
-    },
-    external: {
-      type: Map,
-      marks: {
-        tamil: { type: String, required: true },
-        english: { type: String, required: true },
-        mathmaticals: { type: String, required: true },
-        science: { type: String, required: true },
-        socialscience: { type: String, required: true }
-      }
-    }
-  }, { timestamps: true });
-  
+  student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
+  internal: {
+    tamil: { type: Number, required: true },
+    english: { type: Number, required: true },
+    mathematics: { type: Number, required: true },
+    science: { type: Number, required: true },
+    socialScience: { type: Number, required: true }
+  },
+  external: {
+    tamil: { type: Number, required: true },
+    english: { type: Number, required: true },
+    mathematics: { type: Number, required: true },
+    science: { type: Number, required: true },
+    socialScience: { type: Number, required: true }
+  }
+}, { timestamps: true });
 
 const Marks = mongoose.model('Marks', marksSchema);
-
 module.exports = Marks;

@@ -16,7 +16,8 @@ const teacherRouter = require('./router/teacher/teacherRouter');
  const MarksRouter = require('./router/others/marksRouter');
  const MaterialsRouter = require('./router/others/materialRouter');
  const SubjectRouter = require('./router/others/subjectRouter');
-
+ const TimetableRouter = require('./router/others/timeTableRouter');
+ 
 
 const app = express();
 dotenv.config();
@@ -46,6 +47,8 @@ app.use('/class', classRoutes);
  app.use('/auth',authRoutes)
  app.use('/material', MaterialsRouter);
  app.use('/subject', SubjectRouter);
+ app.use('/timetable', TimetableRouter);
+
 
 const PORT = process.env.PORT || 3000;
 const { MONGO_USERNAME, MONGO_PASSWORD } = process.env;

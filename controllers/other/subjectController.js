@@ -1,57 +1,29 @@
-const express = require("express");
-//const router = express.Router();
 const Subject = require("../../models/others/subject");
 const asyncHandler = require("express-async-handler");
 
-const getSubject=  asyncHandler( async (req, res) => {
-   
-    let subject = await Subject.find();
-    if (!subject) {
-      return res 
-        .status(400)
-        .json({ success: false, message: "No Subject Available" });
-    }
-    const data = {
-      success: true,
-      message: "All Subject Loaded!",
-      subject,
-    };
-    res.json(subject);
-  } )
+const getSubject = asyncHandler(async (req, res) => {
+  const subjects = await Subject.find({});
+  res.status(200).json({ success: true, data: subjects });
+});
 
-const addSubject =  asyncHandler( async (req, res) => {
-  let { name, code } = req.body;
- 
-    let subject = await Subject.findOne({ code });
-    if (subject) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Subject Already Exists" });
-    }
-    await Subject.create({
-      name,
-      code,
-    });
-    const data = {
-      success: true,
-      message: "Subject Added!",
-    };
-    res.json(data);
-  } )
+const addSubject = asyncHandler(async (req, res) => {
+  const existingSubject = await Subject.findOne({ code: req.body.code });
+  
+  if (existingSubject) {
+    return res.status(400).json({ success: false, message: "Subject already exists" });
+  }
 
-const deleteSubject =  asyncHandler( async (req, res) => {
- 
-    let subject = await Subject.findByIdAndDelete(req.params.id);
-    if (!subject) {
-      return res
-        .status(400)
-        .json({ success: false, message: "No Subject Exists!" });
-    }
-    const data = {
-      success: true,
-      message: "Subject Deleted!",
-    };
-    res.json(data);
-  } )
+  const newSubject = new Subject(req.body);
+  await newSubject.save();
+  res.status(201).json({ success: true, data: newSubject });
+});
 
-module.exports = {getSubject,deleteSubject,addSubject};
+const deleteSubject = asyncHandler(async (req, res) => {
+  const subject = await Subject.findByIdAndDelete(req.params.id);
+  if (!subject) {
+    return res.status(404).json({ success: false, message: "Subject not found" });
+  }
+  res.status(200).json({ success: true, message: "Subject deleted" });
+});
+
+module.exports = { getSubject, addSubject, deleteSubject };
